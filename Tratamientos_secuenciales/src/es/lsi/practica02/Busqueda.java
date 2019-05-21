@@ -57,7 +57,20 @@ public class Busqueda {
 			Float precio) {
 		Optional<Producto> ret = Optional.empty();
 
-		// TODO
+		int m = (i+j)/2;
+
+		if(i == j && l.get(i).getPrecio() < precio) {
+			ret = ret;
+		}else if(i >= j && l.get(i).getPrecio() > precio) {
+			Optional<Producto> opt = Optional.of(new Producto(l.get(i)));
+			ret = opt;
+		}else if(l.get(m).getPrecio() == precio) {
+			ret = Optional.of(new Producto(atras(l, m, precio)));
+		}else if(l.get(m).getPrecio() < precio) {
+			ret = buscaBS(l, m+1, j, precio);
+		}else if(l.get(m).getPrecio() > precio) {
+			ret = buscaBS(l, i, m, precio);
+		}		
 
 		return ret;
 	}
@@ -161,8 +174,14 @@ public class Busqueda {
 	 * @return Valor total de los productos
 	 */
 	public static Float valorTotalAlmacen(List<Producto> l) {
-		// TODO
-		return null;
+
+		Float total = 0f;
+		
+		for(Producto p: l) {
+			total = total + p.getPrecio();
+		}
+		
+		return total;
 	}
 
 	private static List<Producto> cloneListaProductos(List<Producto> l) {
