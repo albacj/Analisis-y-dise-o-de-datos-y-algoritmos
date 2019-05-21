@@ -1,6 +1,7 @@
 package es.lsi.practica02;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -26,7 +27,13 @@ public class Busqueda {
 	public static Optional<Producto> busca(List<Producto> l, Float precio) {
 		Optional<Producto> p = Optional.empty();
 
-		// TODO
+		for(Producto producto: l) {
+			if(producto.getPrecio() >= precio) {
+				Optional<Producto> opt = Optional.of(new Producto(producto));
+				p = opt;
+				break;
+			}
+		}
 
 		return p;
 	}
@@ -87,9 +94,17 @@ public class Busqueda {
 	 */
 	public static List<Producto> buscaRangoPrecio(Float precioMenor,
 			Float precioMayor, List<Producto> l) {
-		// TODO
 
-		return null;
+		List<Producto> subLista = new ArrayList<Producto>();
+		Collections.sort(l, (p1, p2) -> p1.getPrecio().compareTo(p2.getPrecio()));
+		
+		for(Producto p: l) {
+			if(p.getPrecio() >= precioMenor && p.getPrecio() <= precioMayor) {
+				subLista.add(p);
+			}
+		}
+		
+		return subLista;
 	}
 
 	/**
@@ -106,8 +121,15 @@ public class Busqueda {
 	 */
 	public static List<Float> buscaPreciosEntre(Float precioMenor,
 			Float precioMayor, List<Producto> l) {
-		// TODO
-		return null;
+
+		List<Float> precios = new ArrayList<Float>();
+		List<Producto> productos = buscaRangoPrecio(precioMayor, precioMayor, l);
+		
+		for(Producto p: productos) {
+			precios.add(p.getPrecio());
+		}
+		
+		return precios;
 	}
 
 	/**
@@ -122,7 +144,11 @@ public class Busqueda {
 	 */
 	public static List<Producto> aplicaIVAPrecio(List<Producto> l, Float iva) {
 		List<Producto> res = cloneListaProductos(l);
-		// TODO
+
+		for(Producto p: res) {
+			p.setPrecio(p.getPrecio() * (1f + iva / 100f));
+		}
+		
 		return res;
 	}
 
