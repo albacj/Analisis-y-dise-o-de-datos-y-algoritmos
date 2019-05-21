@@ -16,10 +16,14 @@ public class AlternativaAnuncios {
 	}
 	
 	public static AlternativaAnuncios createEliminar(Integer p1) {
-		//TODO
+		
+		return new AlternativaAnuncios(null, p1, null);
 	}
 	private AlternativaAnuncios(Opcion opcion, Integer p1, Integer p2) {
-		//TODO
+		
+		this.opcion = opcion;
+		this.p1 = p1;
+		this.p2 = p2;
 	}
 		
 
